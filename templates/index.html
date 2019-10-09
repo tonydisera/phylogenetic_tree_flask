@@ -1,0 +1,191 @@
+<html>
+<head>
+
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700,800,900,900i&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/assets/style.css">
+<link rel="stylesheet" href="static/assets/toggle_button.css">
+
+<script src="http://d3js.org/d3.v5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div style="display:flex; justify-content: center">
+  <div id="body-contents">
+    <div class="topic-heading">
+      <div class="topic-title">
+        <h2>Tree of Life for 100 Vertebrates</h2>
+      </div>
+
+
+    </div>
+
+    <div style="display:flex;flex-flow:row;">
+      <div style="width:190px;margin-right:10px;margin-top:-40px">
+
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button  onclick="resetChart()" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Branch length
+                </button>
+                <div id="toggle-button-container">
+                  <div id="branch-toggle-button" class="toggle-button"></div>
+                </div>
+              </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+
+                <div class="chart-hint">
+                    <div class="emphasize">
+                     To show the branch length, click the toggle button above to "Show".
+                    </div>
+                     <br>
+                     Branch length indicates estimated genetic change, calculated by comparing
+                     sequence from different species. The longer the branch, the more
+                     divergence that has occurred.
+                     <br>
+                     Notice that the Lamprey  diverges significantly from other vertebrates.  <button onclick="highlightExample('Lamprey')" class="btn btn btn-link btn-sm show-me" >Highlight</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button onclick="resetChart();onShowSimilarity()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Sequence shared with Human
+                </button>
+                <div id="toggle-button-container">
+                  <div id="similarity-toggle-button" class="toggle-button"></div>
+                </div>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+
+
+                <div class="chart-hint legend" >
+                     The bar between the branch and the species name indicates the percent
+                     of sequence shared between the species and Human.
+                     <br><br>
+                     <div class="emphasize">
+                     Hover over the colored bar under a species to see the percentage shared
+                     with the Human genome.
+                    </div>
+                     <br>For example, Elephant is
+                     more genetically similar to Human than Mouse.  <button onclick="highlightExample('Elephant,Mouse')" class="btn btn btn-link btn-sm show-me">Highlight</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button onclick="resetChart();onShowGenomeSize()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Genome Size
+                </button>
+
+
+                <div id="toggle-button-container">
+                  <div id="genome-size-toggle-button" class="toggle-button"></div>
+                </div>
+              </h2>
+
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+
+
+                <div class="chart-hint legend" >
+                  Genome sizes can vary greatly.  Toggle to show the genome size for each species, represented by the
+                  size of the circle.
+                  <br><br>
+                  <div class="emphasize">
+                     Hover over the circle under the species to see the genome size.
+                  </div>
+
+                  <br>Notice the genome sizes of fish, which are considerably smaller than other
+                  vertebrates.
+
+                  <button class="btn btn btn-link btn-sm show-me" onclick="highlightExample('Atlantic_cod,Stickleback,Southern_platyfish,Medaka,Tetraodon,Fugu,Yellowbelly_pufferfish,Nile_tilapia,Princess_of_Burundi,Burton\'s_mouthbreeder,Zebra_mbuna,Pundamilia_nyererei', false)">Highlight</button>
+                  <br><br>Notice the large genome size of the Aardvark and Cape golden mole.
+                  <button class="btn btn btn-link btn-outline btn-sm show-me" onclick="highlightExample('Aardvark,Cape_golden_mole', false)">Highlight</button>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingFour">
+              <h2 class="mb-0">
+                <button onclick="resetChart()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                  Credits
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="chart-hint credits">
+                  <div>
+                    Data:<br>
+                    <a href="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/multiz100way/" target="_new">UCSC Browser Human Multi-alignments</a>
+                  </div>
+                  <div style="padding-top: 4px">
+                    D3 phylogenetic tree: <br><a href="https://observablehq.com/@mbostock/tree-of-life" target="_new">Mike Bostock Tree of Life</a>
+                  </div>
+
+                  <div style="padding-top: 4px">
+                    Legends: <br><a href="https://d3-legend.susielu.com/" target="_new">Susie Lu d3-legend</a>
+                  </div>
+
+                  <div style="padding-top: 4px">
+                    This visualization:<br>
+                    <a href="https://www.ischool.berkeley.edu/people/tony-di-sera" target="_new">Tony Di Sera, UC Berkeley MIDS 209.4</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+      </div>
+       <div class="phylo-tree" style="width:720px;height:720px">
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+    <script src="static/js/newick.js"></script>
+    <script src="static/js/buttonstrip.min.js"></script>
+    <script src="static/main.js"></script>
+
+</body>
+</html>

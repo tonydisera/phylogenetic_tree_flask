@@ -1,0 +1,42 @@
+.button-strip {
+    width: 130px;
+    height: 20px;
+    border: 1px solid #949494;
+    border-radius: 2px;
+    display: flex;
+}
+
+.strip-button {
+    background-color: white;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 21px;
+    transition: background-color .4s linear, color .2s linear;
+    cursor: pointer;
+}
+
+
+.strip-button-text {
+    color: #636363;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px;
+    transition: background-color .4s linear, color .2s linear;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.active-strip-button {
+    background-color: #828181;
+    color: white;
+}
+
+.active-strip-button .strip-button-text {
+  color: white;
+  font-weight: 500;
+}
