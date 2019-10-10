@@ -123,12 +123,25 @@ $(document).ready(function() {
 
 })
 
+function turnOffBranchLength() {
+  setTimeout(function() {
+    $('#branch-toggle-button .strip-button-0').addClass("active-strip-button");
+    $('#branch-toggle-button .strip-button-1').removeClass("active-strip-button");
+  },1000)
+  setTimeout(function() {
+    updateBranch(false);
+  },500);
+}
+
 function toggleBranchInfo() {
   d3.select(".phylo-tree svg g.links").classed("thick", showBranchInfo)
   d3.select("#title-bar-chart-similarity").classed("hide-me", !showBranchInfo)
   d3.select("#bar-chart-similarity").classed("hide-me", !showBranchInfo)
   d3.select("#title-bar-chart-genome-size").classed("hide-me", !showBranchInfo)
   d3.select("#bar-chart-genome-size").classed("hide-me", !showBranchInfo)
+  if (showBranchInfo) {
+    turnOffBranchLength();
+  }
 
 }
 
@@ -482,13 +495,13 @@ function highlightExample(speciesNamesStr, emphasizeHuman=true) {
 
 }
 
-function resetChart() {
+function resetChart(emphasizeHuman=true) {
 
   d3.select(".phylo-tree")
      .selectAll("g.nodes text")
      .attr("class", function(d,i) {
 
-        if (d.data.name == 'Human') {
+        if (emphasizeHuman && d.data.name == 'Human') {
           return 'species-name emphasize-node';
         } else {
           return 'species-name';
@@ -675,8 +688,12 @@ function mouseoveredLink(active) {
         if (active ) {
           showSimilarityBarchart(filteredSpecies)
           showGenomeSizeBarchart(filteredSpecies)
-
+          let toHighlight = filteredSpecies.map(function(species) {
+            return species.species;
+          }).join(",");
+          highlightExample(toHighlight,false)
         } else {
+          resetChart(false);
           d3.select("#title-bar-chart-genome-size").transition().duration(700).style("opacity", 0)
           d3.select("#bar-chart-genome-size").transition().duration(700).style("opacity", 0)
           d3.select("#title-bar-chart-similarity").transition().duration(700).style("opacity", 0)
