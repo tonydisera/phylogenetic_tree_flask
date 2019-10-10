@@ -36,7 +36,6 @@ div.topic-title {
 }
 
 div.topic-title h2 {
-  margin-left: 100px;
 }
 
 .phylo-tree svg {
@@ -47,11 +46,11 @@ div.topic-title h2 {
 
 .link--active {
   stroke: black !important;
-  stroke-width: 1.5px;
+  stroke-width: 2.5px;
 }
 
 .link-extension--active {
-  stroke-width: 1.5px;
+  stroke-width: 2.5px;
 }
 
 .label--active {
@@ -60,8 +59,32 @@ div.topic-title h2 {
 
 g.links {
   stroke: #8c8c8c;
+  stroke-width: 1;
   fill: none;
+  cursor: pointer;
 }
+
+
+
+g.links.thick {
+  stroke-width: 4 !important;
+  stroke: #8c8c8c73;
+}
+
+g.link-extensions.thick {
+  stroke-width: 4 !important;
+  stroke: #8c8c8c73;
+}
+
+
+g.links.thick .link--active {
+  stroke-width: 6 !important;
+}
+
+g.links-extensions.thick .link-extension--active {
+  stroke-width: 6 !important;
+}
+
 
 g.link-extensions {
   stroke: #6399cf;
@@ -80,12 +103,12 @@ g.nodes text.emphasize-node {
     fill: #387cc0;
 }
 
+
 g.nodes g.genome-size circle {
-  fill: rgb(57, 81, 149);
-  stroke: #717171;
+  fill: rgba(57, 81, 149, 0.83);
+  stroke: #525282;
   cursor: pointer;
 }
-
 
 g.nodes text.deemphasize-node {
 
@@ -207,4 +230,26 @@ h2 {
   padding-left: 10px;
   padding-right: 10px;
   fill: #535353;
+}
+
+#bar-chart-genome-size .bar {
+  fill: rgba(57, 81, 149, 0.83);
+  stroke: darkgrey;
+}
+#bar-chart-similarity .bar {
+  stroke: darkgrey;
+}
+
+.hide-me {
+  visibility: hidden !important;
+}
+#title-bar-chart-genome-size {
+  margin-left: 100px;
+  font-size: 14px;
+}
+#title-bar-chart-similarity {
+  margin-left: 40px;
+  font-size: 14px;
+  line-height: 15px;
+  text-align: center;
 }

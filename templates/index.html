@@ -26,163 +26,201 @@
         <h2>Tree of Life for 100 Vertebrates</h2>
       </div>
 
-
     </div>
+    <div style="display:flex;flex-flow:row">
 
-    <div style="display:flex;flex-flow:row;">
-      <div style="width:190px;margin-right:10px;margin-top:-40px">
+      <div style="display:flex;flex-flow:row;">
+        <div style="width:230px;margin-right:10px;margin-top:-40px">
 
-        <div class="accordion" id="accordionExample">
-          <div class="card">
-            <div class="card-header" id="headingOne">
-              <h2 class="mb-0">
-                <button  onclick="resetChart()" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Branch length
-                </button>
-                <div id="toggle-button-container">
-                  <div id="branch-toggle-button" class="toggle-button"></div>
+          <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                  <button  onclick="resetChart()" class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Branch length
+                  </button>
+                  <div id="toggle-button-container">
+                    <div id="branch-toggle-button" class="toggle-button"></div>
+                  </div>
+                </h2>
+              </div>
+
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+
+                  <div class="chart-hint">
+                      <div class="emphasize">
+                       To show the branch length, click the toggle button above to "Show".
+                      </div>
+                       <br>
+                       Branch length indicates estimated genetic change, calculated by comparing
+                       sequence from different species. The longer the branch, the more
+                       divergence that has occurred.
+                       <br>
+                       Notice that the Lamprey  diverges significantly from other vertebrates.  <button onclick="highlightExample('Lamprey')" class="btn btn btn-link btn-sm show-me" >Highlight</button>
+                  </div>
+
                 </div>
-              </h2>
+              </div>
             </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                  <button onclick="resetChart();onShowSimilarity()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Sequence shared with Human
+                  </button>
+                  <div id="toggle-button-container">
+                    <div id="similarity-toggle-button" class="toggle-button"></div>
+                  </div>
+                </h2>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
 
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
 
-                <div class="chart-hint">
+                  <div class="chart-hint legend" >
+                       The bar between the branch and the species name indicates the percent
+                       of sequence shared between the species and Human.
+                       <br><br>
+                       <div class="emphasize">
+                       Hover over the colored bar under a species to see the percentage shared
+                       with the Human genome.
+                      </div>
+                       <br>For example, Elephant is
+                       more genetically similar to Human than Mouse.  <button onclick="highlightExample('Elephant,Mouse')" class="btn btn btn-link btn-sm show-me">Highlight</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                  <button onclick="resetChart();onShowGenomeSize()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Genome Size
+                  </button>
+
+
+                  <div id="toggle-button-container">
+                    <div id="genome-size-toggle-button" class="toggle-button"></div>
+                  </div>
+                </h2>
+
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+
+
+                  <div class="chart-hint legend" >
+                    Genome sizes can vary greatly.  Toggle to show the genome size for each species, represented by the
+                    size of the circle.
+                    <br><br>
                     <div class="emphasize">
-                     To show the branch length, click the toggle button above to "Show".
+                       Hover over the circle under the species to see the genome size.
                     </div>
-                     <br>
-                     Branch length indicates estimated genetic change, calculated by comparing
-                     sequence from different species. The longer the branch, the more
-                     divergence that has occurred.
-                     <br>
-                     Notice that the Lamprey  diverges significantly from other vertebrates.  <button onclick="highlightExample('Lamprey')" class="btn btn btn-link btn-sm show-me" >Highlight</button>
-                </div>
 
+                    <br>Notice the genome sizes of fish, which are considerably smaller than other
+                    vertebrates.
+
+                    <button class="btn btn btn-link btn-sm show-me" onclick="highlightExample('Atlantic_cod,Stickleback,Southern_platyfish,Medaka,Tetraodon,Fugu,Yellowbelly_pufferfish,Nile_tilapia,Princess_of_Burundi,Burton\'s_mouthbreeder,Zebra_mbuna,Pundamilia_nyererei', false)">Highlight</button>
+                    <br><br>Notice the large genome size of the Aardvark and Cape golden mole.
+                    <button class="btn btn btn-link btn-outline btn-sm show-me" onclick="highlightExample('Aardvark,Cape_golden_mole', false)">Highlight</button>
+                  </div>
+
+
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h2 class="mb-0">
-                <button onclick="resetChart();onShowSimilarity()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Sequence shared with Human
-                </button>
-                <div id="toggle-button-container">
-                  <div id="similarity-toggle-button" class="toggle-button"></div>
-                </div>
-              </h2>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="card-body">
-
-
-                <div class="chart-hint legend" >
-                     The bar between the branch and the species name indicates the percent
-                     of sequence shared between the species and Human.
-                     <br><br>
-                     <div class="emphasize">
-                     Hover over the colored bar under a species to see the percentage shared
-                     with the Human genome.
+            <div class="card">
+              <div class="card-header" id="headingBranchInfo">
+                <h2 class="mb-0">
+                  <button onclick="resetChart()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseBranchInfo" aria-expanded="false" aria-controls="collapseThree">
+                    Inspecting a Branch
+                  </button>
+                  <div id="toggle-button-container">
+                    <div id="branch-info-toggle-button" class="toggle-button"></div>
+                  </div>
+                </h2>
+              </div>
+              <div id="collapseBranchInfo" class="collapse" aria-labelledby="headingBranchInfo" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="chart-hint">
+                    By isolating a branch, you can view the overall distribution of genome size
+                    and the percent of sequence shared with the Human Genome.
+                    <div class="emphasize">
+                      Hover over the branch lines to see the charts for selected species within branch.
                     </div>
-                     <br>For example, Elephant is
-                     more genetically similar to Human than Mouse.  <button onclick="highlightExample('Elephant,Mouse')" class="btn btn btn-link btn-sm show-me">Highlight</button>
+                  </div>
                 </div>
-
               </div>
             </div>
-          </div>
-          <div class="card">
-            <div class="card-header" id="headingThree">
-              <h2 class="mb-0">
-                <button onclick="resetChart();onShowGenomeSize()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Genome Size
-                </button>
+            <div class="card">
+              <div class="card-header" id="headingCredits">
+                <h2 class="mb-0">
+                  <button onclick="resetChart()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseCredits" aria-expanded="false" aria-controls="collapseThree">
+                    Credits
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseCredits" class="collapse" aria-labelledby="headingCredits" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="chart-hint credits">
+                    <div>
+                      Data:<br>
+                      <a href="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/multiz100way/" target="_new">UCSC Browser Human Multi-alignments</a>
+                    </div>
+                    <div style="padding-top: 4px">
+                      D3 phylogenetic tree: <br><a href="https://observablehq.com/@mbostock/tree-of-life" target="_new">Mike Bostock Tree of Life</a>
+                    </div>
 
+                    <div style="padding-top: 4px">
+                      Legends: <br><a href="https://d3-legend.susielu.com/" target="_new">Susie Lu d3-legend</a>
+                    </div>
 
-                <div id="toggle-button-container">
-                  <div id="genome-size-toggle-button" class="toggle-button"></div>
-                </div>
-              </h2>
-
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-              <div class="card-body">
-
-
-                <div class="chart-hint legend" >
-                  Genome sizes can vary greatly.  Toggle to show the genome size for each species, represented by the
-                  size of the circle.
-                  <br><br>
-                  <div class="emphasize">
-                     Hover over the circle under the species to see the genome size.
+                    <div style="padding-top: 4px">
+                      This visualization:<br>
+                      <a href="https://www.ischool.berkeley.edu/people/tony-di-sera" target="_new">Tony Di Sera, UC Berkeley MIDS 209.4</a>
+                    </div>
                   </div>
 
-                  <br>Notice the genome sizes of fish, which are considerably smaller than other
-                  vertebrates.
-
-                  <button class="btn btn btn-link btn-sm show-me" onclick="highlightExample('Atlantic_cod,Stickleback,Southern_platyfish,Medaka,Tetraodon,Fugu,Yellowbelly_pufferfish,Nile_tilapia,Princess_of_Burundi,Burton\'s_mouthbreeder,Zebra_mbuna,Pundamilia_nyererei', false)">Highlight</button>
-                  <br><br>Notice the large genome size of the Aardvark and Cape golden mole.
-                  <button class="btn btn btn-link btn-outline btn-sm show-me" onclick="highlightExample('Aardvark,Cape_golden_mole', false)">Highlight</button>
                 </div>
-
-
               </div>
             </div>
+
+
+
+
+
+
           </div>
-          <div class="card">
-            <div class="card-header" id="headingFour">
-              <h2 class="mb-0">
-                <button onclick="resetChart()" class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-                  Credits
-                </button>
-              </h2>
-            </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-              <div class="card-body">
-                <div class="chart-hint credits">
-                  <div>
-                    Data:<br>
-                    <a href="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/multiz100way/" target="_new">UCSC Browser Human Multi-alignments</a>
-                  </div>
-                  <div style="padding-top: 4px">
-                    D3 phylogenetic tree: <br><a href="https://observablehq.com/@mbostock/tree-of-life" target="_new">Mike Bostock Tree of Life</a>
-                  </div>
-
-                  <div style="padding-top: 4px">
-                    Legends: <br><a href="https://d3-legend.susielu.com/" target="_new">Susie Lu d3-legend</a>
-                  </div>
-
-                  <div style="padding-top: 4px">
-                    This visualization:<br>
-                    <a href="https://www.ischool.berkeley.edu/people/tony-di-sera" target="_new">Tony Di Sera, UC Berkeley MIDS 209.4</a>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-
 
 
 
 
         </div>
-
-
-
-
-      </div>
-       <div class="phylo-tree" style="width:720px;height:720px">
+         <div class="phylo-tree" style="width:720px;height:720px">
+        </div>
       </div>
 
+
+      <div>
+        <div style="width:300px;" id="title-bar-chart-similarity" class="hide-me">Percent sequence shared with Human for selected branch</div>
+        <div id="bar-chart-similarity">
+        </div>
+
+        <div id="title-bar-chart-genome-size" class="hide-me">Genome size for selected branch</div>
+        <div id="bar-chart-genome-size">
+        </div>
+      </div>
 
     </div>
 
+
+
+
   </div>
 </div>
+    <script src="static/js/barChart.js"></script>
     <script src="static/js/newick.js"></script>
     <script src="static/js/buttonstrip.min.js"></script>
     <script src="static/main.js"></script>

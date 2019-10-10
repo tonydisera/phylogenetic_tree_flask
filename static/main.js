@@ -36,9 +36,13 @@ var genomeSizeMaxRadius = 7;
 var genomeSizeMinRadius = 2;
 var circlePadding = 4;
 
+var barChartGenomeSize = null;
+var barChartSimilarity = null;
+
 
 var similarityColorScale = null;
 var genomeSizeScale = null;
+var showBranchInfo = false;
 
 let treeObject = null;
 let showSimilarity = false;
@@ -91,6 +95,24 @@ $(document).ready(function() {
   sizeToggleButton.append('#genome-size-toggle-button');
 
 
+
+  var branchInfoToggleButton = new ButtonStrip({
+    id: 'the-branch-info-toggle-button'
+  });
+  branchInfoToggleButton.addButton('Hide', true, 'click', function(){
+    showBranchInfo = false;
+    toggleBranchInfo()
+  });
+  branchInfoToggleButton.addButton('Show', false, 'click', function(){
+    showBranchInfo = true;
+    $('.collapse.show').removeClass("show");
+    $('#collapseBranchInfo').addClass("show")
+    toggleBranchInfo()
+  });
+  branchInfoToggleButton.append('#branch-info-toggle-button');
+
+  initBarchart();
+
   promiseParseTreeData()
   .then(function(theTreeObject) {
     treeObject = theTreeObject
@@ -100,6 +122,15 @@ $(document).ready(function() {
 
 
 })
+
+function toggleBranchInfo() {
+  d3.select(".phylo-tree svg g.links").classed("thick", showBranchInfo)
+  d3.select("#title-bar-chart-similarity").classed("hide-me", showBranchInfo)
+  d3.select("#bar-chart-similarity").classed("hide-me", showBranchInfo)
+  d3.select("#title-bar-chart-genome-size").classed("hide-me", showBranchInfo)
+  d3.select("#bar-chart-genome-size").classed("hide-me", showBranchInfo)
+
+}
 
 function onShowSimilarity() {
   setTimeout(function() {
@@ -180,6 +211,22 @@ function parseSimilarityData(similarityData) {
 }
 
 
+function initBarchart() {
+  barChartSimilarity = barChart()
+          .width(360)
+          .height(250)
+          .margin({top: 5, right: 40, bottom: 120, left: 80})
+          .x(function (d) { return d.species;})
+          .y(function (d) { return d.ratioToHuman;});
+  barChartGenomeSize = barChart()
+          .width(360)
+          .height(250)
+          .margin({top: 5, right: 40, bottom: 120, left: 80})
+          .x(function (d) { return d.species;})
+          .y(function (d) { return d.genomeSize;});
+}
+
+
 
 function drawTree(treeObject, options) {
 
@@ -249,6 +296,9 @@ function drawTree(treeObject, options) {
       .attr("d", linkConstant)
 
 
+  link.on("mouseover", mouseoveredLink(true))
+      .on("mouseout", mouseoveredLink(false))
+
   node = group.append("g")
       .attr("class", "nodes")
 
@@ -284,7 +334,10 @@ function drawTree(treeObject, options) {
         return d.data.name.replace(/_/g, " ")
       })
       .on("mouseover", mouseovered(true))
-      .on("mouseout", mouseovered(false));
+      .on("mouseout", mouseovered(false))
+
+
+
 
   updateBranch(false)
   updateSimilarity(options)
@@ -438,7 +491,7 @@ function drawSimilarityLegend() {
 
   svg.append("g")
     .attr("class", "legendSequential")
-    .attr("transform", "translate(260, " + (-(width/2)+170) + ")");
+    .attr("transform", "translate(250, " + (-(width/2)+170) + ")");
 
   var legendSequential = d3.legendColor()
       .title("Sequence shared with Human")
@@ -459,7 +512,7 @@ function drawGenomeSizeLegend() {
 
   svg.append("g")
     .attr("class", "legendSize")
-    .attr("transform", "translate(260, " + (-(width/2)+530) + ")");
+    .attr("transform", "translate(250, " + (-(width/2)+530) + ")");
 
   var prec     = d3.precisionPrefix(1e5, 1.3e6);
   var formatMB = d3.formatPrefix("." + prec, 1.3e6);
@@ -588,3 +641,85 @@ function mouseovered(active) {
       while (d = d.parent);
     };
   }
+
+function mouseoveredLink(active) {
+    return function(d) {
+
+      if (showBranchInfo) {
+        filteredSpecies = [];
+
+        var capture = function(d) {
+          d3.select(d.linkNode).classed("link--active", active).raise();
+          if (d.children) {
+            d.children.forEach(function(child) {
+              capture(child);
+            })
+          } else {
+            if (active) {
+              filteredSpecies.push(speciesInfo[d.data.name])
+            }
+          }
+        }
+        capture(d.target);
+        if (active ) {
+          showSimilarityBarchart(filteredSpecies)
+          showGenomeSizeBarchart(filteredSpecies)
+
+        }
+      }
+
+    };
+
+}
+
+function showGenomeSizeBarchart(speciesData) {
+
+  d3.select("#title-bar-chart-genome-size").classed("hide-me", speciesData.length == 0)
+  d3.select("#bar-chart-genome-size").classed("hide-me", speciesData.length == 0)
+  d3.select("#bar-chart-genome-size")
+        .datum(speciesData)
+        .call(barChartGenomeSize);
+
+  if (speciesData.length < 40) {
+    d3.selectAll("#bar-chart-genome-size svg .x.axis text")
+          .attr("text-anchor", "start")
+          .attr("transform", "rotate(45),translate(7,-7)")
+          .style("display", "initial")
+    d3.selectAll("#bar-chart-genome-size svg .x.axis line")
+          .style("display", "initial")
+  } else {
+    d3.selectAll("#bar-chart-genome-size svg .x.axis text")
+          .style("display", "none")
+    d3.selectAll("#bar-chart-genome-size svg .x.axis line")
+          .style("display", "none")
+
+  }
+}
+function showSimilarityBarchart(speciesData) {
+
+  d3.select("#title-bar-chart-similarity").classed("hide-me", speciesData.length == 0)
+  d3.select("#bar-chart-similarity").classed("hide-me", speciesData.length == 0)
+  d3.select("#bar-chart-similarity")
+        .datum(speciesData)
+        .call(barChartSimilarity);
+
+  d3.selectAll("#bar-chart-similarity svg .bar")
+    .attr("fill", function(d,i) {
+      return similarityColorScale(d.ratioToHuman);
+    })
+
+  if (speciesData.length < 40) {
+    d3.selectAll("#bar-chart-similarity svg .x.axis text")
+          .attr("text-anchor", "start")
+          .attr("transform", "rotate(45),translate(7,-7)")
+          .style("display", "initial")
+    d3.selectAll("#bar-chart-similarity svg .x.axis line")
+          .style("display", "initial")
+  } else {
+    d3.selectAll("#bar-chart-similarity svg .x.axis text")
+          .style("display", "none")
+    d3.selectAll("#bar-chart-similarity svg .x.axis line")
+          .style("display", "none")
+
+  }
+}
