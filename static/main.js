@@ -203,6 +203,7 @@ function parseSimilarityData(similarityData) {
 
     speciesInfo[speciesName] = {species:         speciesName,
                                 ratioToHuman:    +rec.ratio_same_as_human,
+                                pctToHuman:      Math.round(+rec.ratio_same_as_human * 100,0),
                                 scientific_name: rec.scientific_name,
                                 genomeSize:      rec.genome_size_mb};
 
@@ -217,7 +218,7 @@ function initBarchart() {
           .height(250)
           .margin({top: 5, right: 40, bottom: 120, left: 80})
           .x(function (d) { return d.species;})
-          .y(function (d) { return d.ratioToHuman;});
+          .y(function (d) { return d.pctToHuman;});
   barChartGenomeSize = barChart()
           .width(360)
           .height(250)

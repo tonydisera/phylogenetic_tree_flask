@@ -244,8 +244,10 @@ h2 {
   visibility: hidden !important;
 }
 #title-bar-chart-genome-size {
-  margin-left: 100px;
+  margin-left: 40px;
   font-size: 14px;
+  text-align: center;
+  line-height: 15px;
 }
 #title-bar-chart-similarity {
   margin-left: 40px;
