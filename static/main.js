@@ -125,10 +125,10 @@ $(document).ready(function() {
 
 function toggleBranchInfo() {
   d3.select(".phylo-tree svg g.links").classed("thick", showBranchInfo)
-  d3.select("#title-bar-chart-similarity").classed("hide-me", showBranchInfo)
-  d3.select("#bar-chart-similarity").classed("hide-me", showBranchInfo)
-  d3.select("#title-bar-chart-genome-size").classed("hide-me", showBranchInfo)
-  d3.select("#bar-chart-genome-size").classed("hide-me", showBranchInfo)
+  d3.select("#title-bar-chart-similarity").classed("hide-me", !showBranchInfo)
+  d3.select("#bar-chart-similarity").classed("hide-me", !showBranchInfo)
+  d3.select("#title-bar-chart-genome-size").classed("hide-me", !showBranchInfo)
+  d3.select("#bar-chart-genome-size").classed("hide-me", !showBranchInfo)
 
 }
 
