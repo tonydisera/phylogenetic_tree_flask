@@ -152,6 +152,16 @@ function onShowGenomeSize() {
 
 }
 
+function onShowBranchInfo() {
+  setTimeout(function() {
+    $('#branch-info-toggle-button .strip-button-0').removeClass("active-strip-button");
+    $('#branch-info-toggle-button .strip-button-1').addClass("active-strip-button");
+  },1000)
+  showBranchInfo = true;
+  toggleBranchInfo();
+
+}
+
 function getChartOptions() {
   return {
     'showSimilarity': showSimilarity,
@@ -666,17 +676,26 @@ function mouseoveredLink(active) {
           showSimilarityBarchart(filteredSpecies)
           showGenomeSizeBarchart(filteredSpecies)
 
+        } else {
+          d3.select("#title-bar-chart-genome-size").transition().duration(700).style("opacity", 0)
+          d3.select("#bar-chart-genome-size").transition().duration(700).style("opacity", 0)
+          d3.select("#title-bar-chart-similarity").transition().duration(700).style("opacity", 0)
+          d3.select("#bar-chart-similarity").transition().duration(700).style("opacity", 0)
+
         }
       }
-
     };
 
 }
 
 function showGenomeSizeBarchart(speciesData) {
 
-  d3.select("#title-bar-chart-genome-size").classed("hide-me", speciesData.length == 0)
-  d3.select("#bar-chart-genome-size").classed("hide-me", speciesData.length == 0)
+  d3.select("#title-bar-chart-genome-size").transition().duration(700).style("opacity", function(d) {
+    speciesData.length > 0 ? 1 : 0;
+  })
+  d3.select("#bar-chart-genome-size").transition().duration(700).style("opacity", function(d) {
+    speciesData.length > 0 ? 1 : 0;
+  })
   d3.select("#bar-chart-genome-size")
         .datum(speciesData)
         .call(barChartGenomeSize);
@@ -698,8 +717,12 @@ function showGenomeSizeBarchart(speciesData) {
 }
 function showSimilarityBarchart(speciesData) {
 
-  d3.select("#title-bar-chart-similarity").classed("hide-me", speciesData.length == 0)
-  d3.select("#bar-chart-similarity").classed("hide-me", speciesData.length == 0)
+  d3.select("#title-bar-chart-similarity").transition().duration(700).style("opacity", function(d) {
+    speciesData.length > 0 ? 1 : 0;
+  })
+  d3.select("#bar-chart-similarity").transition().duration(700).style("opacity", function(d) {
+    speciesData.length > 0 ? 1 : 0;
+  })
   d3.select("#bar-chart-similarity")
         .datum(speciesData)
         .call(barChartSimilarity);

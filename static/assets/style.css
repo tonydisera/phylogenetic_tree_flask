@@ -36,6 +36,7 @@ div.topic-title {
 }
 
 div.topic-title h2 {
+  margin-left: -80px;
 }
 
 .phylo-tree svg {
